@@ -15,21 +15,21 @@ class PizzaController extends Controller
     // $pizzas = Pizza::where('type', 'hawaiian')->get();
     $pizzas = Pizza::latest()->get();
 
-
-    // $pizzas = [
-    //   ['type' => 'hawaiian', 'base' => 'cheesy crust'],
-    //   ['type' => 'volcano', 'base' => 'garlic crust'],
-    //   ['type' => 'veg supreme', 'base' => 'thin & crispy']
-    // ];
-
-    return view('pizzas', [
+    return view('pizzas.index', [
       'pizzas' => $pizzas,
     ]);
   }
 
   public function show($id) {
     // use the $id variable to query the db for a record
-    return view('details', ['id' => $id]);
+    $pizza = Pizza::findOrFail($id);
+
+    return view('pizzas.show', ['pizza' => $pizza]);
+  }
+
+  public function create() {
+    
+    return view('pizzas.create');
   }
 
 }
