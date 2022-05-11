@@ -32,4 +32,19 @@ class PizzaController extends Controller
     return view('pizzas.create');
   }
 
+  public function store() {
+    // error_log(request('name')); access to data from CLI
+    
+    $pizza = new Pizza();
+    $pizza-> name = request('name');
+    $pizza-> type = request('type');
+    $pizza-> base = request('base');
+
+    error_log($pizza); // only for visualization
+
+    $pizza->save();
+   
+    return redirect('/')->with('mssg', 'Thanks for your order!');
+  }
+
 }
