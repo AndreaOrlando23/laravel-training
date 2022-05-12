@@ -7,6 +7,9 @@ use App\Models\Pizza;
 
 class PizzaController extends Controller
 {
+  // public function __construct(){  
+  //   $this->middleware('auth');
+  // }  --> this is the right version for auth controller (not in routes)
 
   public function index() {
     // get data from a database
@@ -39,12 +42,19 @@ class PizzaController extends Controller
     $pizza-> name = request('name');
     $pizza-> type = request('type');
     $pizza-> base = request('base');
+    $pizza-> toppings = request('toppings');
 
-    error_log($pizza); // only for visualization
-
+    // error_log($pizza); // only for visualization
     $pizza->save();
    
     return redirect('/')->with('mssg', 'Thanks for your order!');
+  }
+
+  public function destroy($id) {
+    $pizza = Pizza::findOrFail($id);
+    $pizza->delete();
+    
+    return redirect('/pizzas');
   }
 
 }
